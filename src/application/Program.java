@@ -23,6 +23,7 @@ public class Program {
 
         System.out.print(" Check-in date (DD/MM/AAAA): ");
         Date checkIn = sdf.parse(sc.nextLine());
+        
         System.out.print("Check-out date (DD/MM/AAAA): ");
         Date checkOut = sdf.parse(sc.nextLine());
 
@@ -33,24 +34,25 @@ public class Program {
             System.out.println("Error in reservation: Reservation dates for update must be future dates");
         } 
         else {
-            Reservation reserve = new Reservation(roomNumber, checkIn, checkOut);
-            System.out.println("Reservation: " + reserve);
-
+            Reservation reservation = new Reservation(roomNumber, checkIn, checkOut);
+            System.out.println("Reservation: " + reservation);
+            
+            System.out.println();
             System.out.println("Enter data to update the reservation:");
+            
             System.out.print(" Check-in date (DD/MM/AAAA): ");
             checkIn = sdf.parse(sc.nextLine());
+            
             System.out.print("Check-out date (DD/MM/AAAA): ");
             checkOut = sdf.parse(sc.nextLine());
+            
+            String error = reservation.updateDates(checkIn, checkOut);
 
-            if (checkOut.before(checkIn)) {
-                System.out.println("Error in reservation: Check-out date must be after check-in date");
+            if (error != null) {
+                System.out.println("Error in reservation: " + error);
             } 
-            else if (checkIn.before(now) || checkOut.before(now)) {
-                System.out.println("Error in reservation: Reservation dates for update must be future dates");
-            }  
             else {
-                reserve.updateDates(checkIn, checkOut);
-                System.out.println("Reservation: " + reserve);
+                System.out.println("Reservation: " + reservation);
             }
         }
         sc.close();
